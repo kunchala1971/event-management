@@ -1,0 +1,37 @@
+ .image-section {
+      background: url('https://i.ibb.co/NZ1Yy8v/signup.png') center/cover no-repeat;
+      min-height: 400px;
+    }
+    .form-container {
+      max-width: 1000px;
+      margin: 50px auto;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .form-control-icon {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      color: #999;
+    }
+    .form-group {
+      position: relative;
+    }
+    .form-group input {
+      padding-left: 40px;
+    }
+    .social-icons a {
+      display: inline-block;
+      margin-right: 10px;
+      font-size: 18px;
+      padding: 10px 14px;
+      border-radius: 4px;
+      color: #fff;
+      text-decoration: none;
+    }
+    .facebook { background-color: #3b5998; }
+    .twitter { background-color: #55acee; }
+    .google { background-color: #dd4b39; }
