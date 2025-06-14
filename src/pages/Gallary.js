@@ -344,28 +344,28 @@ const Gallary = () => {
           </div>
         </div>
         <hr class="divider-d" />
-        <footer class="footer bg-dark">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6">
-                <p class="copyright font-alt">
+        <footer className="footer bg-dark">
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-6">
+                <p className="copyright font-alt">
                   &copy; 2017&nbsp;<a href="index.html">TitaN</a>, All Rights
                   Reserved
                 </p>
               </div>
-              <div class="col-sm-6">
-                <div class="footer-social-links">
+              <div className="col-sm-6">
+                <div className="footer-social-links">
                   <a href="#">
-                    <i class="fa fa-facebook"></i>
+                    <i className="fa fa-facebook"></i>
                   </a>
                   <a href="#">
-                    <i class="fa fa-twitter"></i>
+                    <i className="fa fa-twitter"></i>
                   </a>
                   <a href="#">
-                    <i class="fa fa-dribbble"></i>
+                    <i className="fa fa-dribbble"></i>
                   </a>
                   <a href="#">
-                    <i class="fa fa-skype"></i>
+                    <i className="fa fa-skype"></i>
                   </a>
                 </div>
               </div>

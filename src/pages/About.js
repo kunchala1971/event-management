@@ -221,7 +221,6 @@ const About = () => {
           </div>
         </div>
         <hr className="divider-d" />
-
         <footer className="footer bg-dark">
           <div className="container">
             <div className="row">

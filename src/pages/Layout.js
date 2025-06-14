@@ -9,10 +9,9 @@ const Layout = () => {
     <div>
       <Navbar />
       <hr />
-      <div style={{marginTop:"29px"}}>
-<Outlet />
+      <div style={{ marginTop: "29px" }}>
+        <Outlet />
       </div>
-      
     </div>
   );
 };
