@@ -16,10 +16,10 @@ import EventBooking from "./Components/EventBooking";
 import CompletedEvents from "./Components/CompletedEvents";
 import PendingEvents from "./Components/PendingEvents";
 import CanceledEvents from "./Components/CanceledEvents";
-
 const App = () => {
   const [auth, setAuth] = useState(true);
-  const [role, setRole] = useState("admin");
+  const [role, setRole] = useState("");
+  const [userdata, setUserData] = useState({});
   return (
     <>
       <Routes>
@@ -30,29 +30,81 @@ const App = () => {
           <Route path="gallary" element={<Gallary />} />
           <Route path="services" element={<Services />} />
         </Route>
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <Login
+              setAuth={setAuth}
+              setRole={setRole}
+              setUserData={setUserData}
+            />
+          }
+        />
         <Route path="/register" element={<Register />} />
 
         {auth && role === "admin" && (
-          <Route path="/dashboard" element={<Dashboard role={role} />}>
+          <Route
+            path="/dashboard"
+            element={
+              <Dashboard role={role} setAuth={setAuth} userdata={userdata} />
+            }
+          >
             <Route index element={<AdminWidgets />} />
-            <Route path="events-list" element={<EventsList />} />
-            <Route path="event-booking" element={<EventBooking />} />
-            <Route path="completed-events" element={<CompletedEvents />} />
-            <Route path="pending-events" element={<PendingEvents />} />
-            <Route path="canceled-events" element={<CanceledEvents />} />
+            <Route
+              path="events-list"
+              element={<EventsList userdata={userdata} />}
+            />
+            <Route
+              path="event-booking"
+              element={<EventBooking userdata={userdata} />}
+            />
+            <Route
+              path="completed-events"
+              element={<CompletedEvents userdata={userdata} />}
+            />
+            <Route
+              path="pending-events"
+              element={<PendingEvents userdata={userdata} />}
+            />
+            <Route
+              path="canceled-events"
+              element={<CanceledEvents userdata={userdata} />}
+            />
           </Route>
         )}
         {auth && role === "user" && (
-          <Route path="/dashboard" element={<Dashboard role={role} />}>
+          <Route
+            path="/dashboard"
+            element={
+              <Dashboard role={role} setAuth={setAuth} userdata={userdata} />
+            }
+          >
             <Route index element={<UserWidgets />} />
-            <Route path="events-list" element={<EventsList />} />
-            <Route path="event-booking" element={<EventBooking />} />
-            <Route path="completed-events" element={<CompletedEvents />} />
-            <Route path="pending-events" element={<PendingEvents />} />
-            <Route path="canceled-events" element={<CanceledEvents />} />
+            <Route
+              path="events-list"
+              element={<EventsList userdata={userdata} />}
+            />
+            <Route
+              path="event-booking"
+              element={<EventBooking userdata={userdata} />}
+            />
+            <Route
+              path="completed-events"
+              element={<CompletedEvents userdata={userdata} />}
+            />
+            <Route
+              path="pending-events"
+              element={<PendingEvents userdata={userdata} />}
+            />
+            <Route
+              path="canceled-events"
+              element={<CanceledEvents userdata={userdata} />}
+            />
           </Route>
         )}
+        <Route path="/dashboard" element={<Layout />}>
+          <Route index element={<Home />} />
+        </Route>
       </Routes>
     </>
   );

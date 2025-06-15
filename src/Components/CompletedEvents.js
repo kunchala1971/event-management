@@ -1,6 +1,6 @@
 import React from "react";
 
-const CompletedEvents = () => {
+const CompletedEvents = ({userdata}) => {
   return (
     <div>
       <h1>Completed Events</h1>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CanceledEvents = () => {
+const CanceledEvents = ({userdata}) => {
   return (
     <div>
       <h1>Canceled Events</h1>

@@ -1,6 +1,6 @@
 import React from 'react'
 
- const EventsList = () => {
+ const EventsList = ({userdata}) => {
   return (
     <h1>EventsList</h1>
   )

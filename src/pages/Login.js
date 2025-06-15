@@ -1,70 +1,112 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
-const Login = () => {
+const Login = ({ setAuth, setRole ,setUserData}) => {
+  const navigateTo = useNavigate();
   const userNameRef = useRef("");
   const userPasswordRef = useRef("");
   const registerUserNameRef = useRef("");
   const registerEmailIdRef = useRef("");
   const userRegisterPasswordRef = useRef("");
-  const loginSubmitHandler = () => {
-    alert(
-      "User Name :" +
-        userNameRef.current.value +
-        "\nPassword:" +
-        userPasswordRef.current.value
-    );
+  const loginSubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await axios.post(
+        `http://localhost:8088/api/user/login`,
+        {
+          userEmail: userNameRef.current.value,
+          userPassword: userPasswordRef.current.value,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+      if (result.status === 200) {
+        setAuth(true);
+        setRole(result.data.userRole);
+        setUserData(result.data);
+        navigateTo("/dashboard");
+      } else {
+        setAuth(false);
+      }
+    } catch (err) {
+      alert("Please Enter Correct User Name and Password!");
+      setAuth(true);
+    }
   };
-  const registerSubmitHandler = () => {
-    alert(
-      "User Name" +
-        registerUserNameRef.current.value +
-        "\nEmail ID: " +
-        registerEmailIdRef.current.value +
-        "\nPassword : " +
-        userRegisterPasswordRef.current.value
-    );
+  const registerSubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await axios.post(
+        `http://localhost:8088/api/user`,
+        {
+          userName: registerUserNameRef.current.value,
+          userEmail: registerEmailIdRef.current.value,
+          userPassword: userRegisterPasswordRef.current.value,
+          userRole: "user",
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+      if (result.status === 200) {
+        alert("Registration Successfully Completed.");
+      } else {
+        alert("Please Enter Correct Details");
+      }
+    } catch (err) {
+      alert("Please Enter Correct Details");
+    }
   };
+
   return (
-    <div class="containers bodys">
+    <div className="containers bodys">
       <input type="checkbox" id="flip" />
-      <div class="cover">
-        <div class="front">
+      <div className="cover">
+        <div className="front">
           <img src="images/frontImg.jpg" alt="" />
-          <div class="text">
-            <span class="text-1">
+          <div className="text">
+            <span className="text-1">
               Every new friend is a <br /> new adventure
             </span>
-            <span class="text-2">Let's get connected</span>
+            <span className="text-2">Let's get connected</span>
           </div>
         </div>
-        <div class="back">
-          <img class="backImg" src="images/backImg.jpg" alt="" />
-          <div class="text">
-            <span class="text-1">
+        <div className="back">
+          <img className="backImg" src="images/backImg.jpg" alt="" />
+          <div className="text">
+            <span className="text-1">
               Complete miles of journey <br /> with one step
             </span>
-            <span class="text-2">Let's get started</span>
+            <span className="text-2">Let's get started</span>
           </div>
         </div>
       </div>
-      <div class="forms">
-        <div class="form-content">
-          <div class="login-form">
-            <div class="title">Login</div>
+      <div className="forms">
+        <div className="form-content">
+          <div className="login-form">
+            <div className="title">Login</div>
             <form onSubmit={loginSubmitHandler}>
-              <div class="input-boxes">
-                <div class="input-box">
-                  <i class="fas fa-envelope"></i>
+              <div className="input-boxes">
+                <div className="input-box">
+                  <i className="fas fa-envelope"></i>
                   <input
-                    type="text"
+                    type="email"
                     placeholder="Enter your email"
                     ref={userNameRef}
                     required
                   />
                 </div>
-                <div class="input-box">
-                  <i class="fas fa-lock"></i>
+                <div className="input-box">
+                  <i className="fas fa-lock"></i>
                   <input
                     type="password"
                     placeholder="Enter your password"
@@ -72,29 +114,29 @@ const Login = () => {
                     required
                   />
                 </div>
-                <div class="text">
+                <div className="text">
                   <a href="#">Forgot password?</a>
                 </div>
-                <div class="button input-box">
+                <div className="button input-box">
                   <input type="submit" value="Sumbit" />
                 </div>
-                <div class="text sign-up-text">
-                  Don't have an account? <label for="flip">Sigup now</label>
+                <div className="text sign-up-text">
+                  Don't have an account? <label htmlFor="flip">Sigup now</label>
                 </div>
-                <div class="text sign-up-text">
+                <div className="text sign-up-text">
                   <Link to="/">
-                    <label for="flip">Home</label>
+                    <label htmlFor="flip">Home</label>
                   </Link>
                 </div>
               </div>
             </form>
           </div>
-          <div class="signup-form">
-            <div class="title">Signup</div>
+          <div className="signup-form">
+            <div className="title">Signup</div>
             <form onSubmit={registerSubmitHandler}>
-              <div class="input-boxes">
-                <div class="input-box">
-                  <i class="fas fa-user"></i>
+              <div className="input-boxes">
+                <div className="input-box">
+                  <i className="fas fa-user"></i>
                   <input
                     type="text"
                     placeholder="Enter your name"
@@ -102,17 +144,17 @@ const Login = () => {
                     required
                   />
                 </div>
-                <div class="input-box">
-                  <i class="fas fa-envelope"></i>
+                <div className="input-box">
+                  <i className="fas fa-envelope"></i>
                   <input
-                    type="text"
+                    type="email"
                     placeholder="Enter your email"
                     ref={registerEmailIdRef}
                     required
                   />
                 </div>
-                <div class="input-box">
-                  <i class="fas fa-lock"></i>
+                <div className="input-box">
+                  <i className="fas fa-lock"></i>
                   <input
                     type="password"
                     placeholder="Enter your password"
@@ -120,15 +162,16 @@ const Login = () => {
                     required
                   />
                 </div>
-                <div class="button input-box">
+                <div className="button input-box">
                   <input type="submit" value="Sumbit" />
                 </div>
-                <div class="text sign-up-text">
-                  Already have an account? <label for="flip">Login now</label>
+                <div className="text sign-up-text">
+                  Already have an account?{" "}
+                  <label htmlFor="flip">Login now</label>
                 </div>
-                <div class="text sign-up-text">
+                <div className="text sign-up-text">
                   <Link to="/">
-                    <label for="flip">Home</label>
+                    <label htmlFor="flip">Home</label>
                   </Link>
                 </div>
               </div>
