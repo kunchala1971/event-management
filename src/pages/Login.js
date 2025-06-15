@@ -26,7 +26,7 @@ const Login = ({ setAuth, setRole ,setUserData}) => {
           },
         }
       );
-      if (result.status === 200) {
+      if (result.status === 200 || result.status === 201) {
         setAuth(true);
         setRole(result.data.userRole);
         setUserData(result.data);
@@ -57,7 +57,7 @@ const Login = ({ setAuth, setRole ,setUserData}) => {
           },
         }
       );
-      if (result.status === 200) {
+      if (result.status === 200 || result.status === 201) {
         alert("Registration Successfully Completed.");
       } else {
         alert("Please Enter Correct Details");

@@ -58,7 +58,7 @@ export const AdminWidgets = ({ userdata }) => {
   ];
 
   return (
-    <div className="container my-4">
+    <div className="my-4" style={{width:"100%"}}>
       <div
         style={{
           display: 'flex',
