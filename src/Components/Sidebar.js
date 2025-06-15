@@ -25,7 +25,7 @@ const Sidebar = ({ userRole }) => {
         <button className="hamburger" onClick={toggleSidebar}>
           ☰
         </button>
-        {!collapsed && <span className="sidebar-title">Auto Fin App</span>}
+        {!collapsed && <span className="sidebar-title">Event M S</span>}
       </div>
 
       <ul className="sidebar-list">
