@@ -8,15 +8,20 @@ import About from "./pages/About";
 import Contactus from "./pages/Contactus";
 import Services from "./pages/Services";
 import Gallary from "./pages/Gallary";
-import { Dashboard } from "./Components/Dashboard";
-import { EventsList } from "./Components/EventsList";
+import Dashboard from "./Components/Dashboard";
+import EventsList from "./Components/EventsList";
 import { UserWidgets } from "./Components/UserWidgets";
+import { AdminWidgets } from "./Components/AdminWidgets";
+import EventBooking from "./Components/EventBooking";
+import CompletedEvents from "./Components/CompletedEvents";
+import PendingEvents from "./Components/PendingEvents";
+import CanceledEvents from "./Components/CanceledEvents";
 
 const App = () => {
   const [auth, setAuth] = useState(true);
-  const [role, setRole] = useState("Admin");
+  const [role, setRole] = useState("admin");
   return (
-    <main>
+    <>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -28,20 +33,28 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {auth && role === "Admin" && (
+        {auth && role === "admin" && (
           <Route path="/dashboard" element={<Dashboard role={role} />}>
-            <Route index element={<UserWidgets />} />
-            <Route path="eventslist" element={<EventsList />} />
+            <Route index element={<AdminWidgets />} />
+            <Route path="events-list" element={<EventsList />} />
+            <Route path="event-booking" element={<EventBooking />} />
+            <Route path="completed-events" element={<CompletedEvents />} />
+            <Route path="pending-events" element={<PendingEvents />} />
+            <Route path="canceled-events" element={<CanceledEvents />} />
           </Route>
         )}
-        {auth && role === "User" && (
+        {auth && role === "user" && (
           <Route path="/dashboard" element={<Dashboard role={role} />}>
             <Route index element={<UserWidgets />} />
-            <Route path="eventslist" element={<EventsList />} />
+            <Route path="events-list" element={<EventsList />} />
+            <Route path="event-booking" element={<EventBooking />} />
+            <Route path="completed-events" element={<CompletedEvents />} />
+            <Route path="pending-events" element={<PendingEvents />} />
+            <Route path="canceled-events" element={<CanceledEvents />} />
           </Route>
         )}
       </Routes>
-    </main>
+    </>
   );
 };
 

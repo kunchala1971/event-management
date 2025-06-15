@@ -1,7 +1,8 @@
 import React from 'react'
 
-export const EventsList = () => {
+ const EventsList = () => {
   return (
-    <div>EventsList</div>
+    <h1>EventsList</h1>
   )
 }
+export default EventsList;

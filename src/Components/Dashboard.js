@@ -1,12 +1,20 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { Sidebar } from "./Sidebar";
+import Sidebar from "./Sidebar";
+import TopBar from "./TopBar";
+import "./Dashboard.css";
 
-export const Dashboard = ({ role }) => {
-  return <div> {role}Dashboard
-   <div style={{ marginTop: "29px" }}>
-    <Sidebar/>
-        <Outlet />
+const Dashboard = ({ role }) => {
+  return (
+    <div className="layout">
+      <Sidebar userRole={role} />
+      <div className="content-area">
+        <TopBar />
+        <main className="main-content">
+          <Outlet />
+        </main>
       </div>
-  </div>;
+    </div>
+  );
 };
+export default Dashboard;

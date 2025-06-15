@@ -1,0 +1,139 @@
+.sidebar {
+  min-height: 100vh;
+  height: 100%;
+  background-color: #1a202c;
+  color: white;
+  transition: width 0.5s ease;
+  width: 220px;
+  overflow-x: visible;
+  padding: 20px 10px;
+  box-sizing: border-box;
+}
+
+.sidebar.collapsed {
+  width: 60px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.hamburger {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.sidebar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-item {
+  position: relative;
+}
+
+.sidebar-button {
+  background: none;
+  border: none;
+  color: white;
+  width: 100%;
+  padding: 10px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.sidebar-button:hover {
+  background-color: #2d3748;
+}
+
+.icon {
+  width: 20px;
+  text-align: center;
+}
+
+.label {
+  flex: 1;
+  text-align: left;
+  font-size: 1.25rem;
+}
+.arrow {
+  font-size: 0.8rem;
+}
+/* Default submenu hidden */
+.submenu {
+  list-style: none;
+  padding: 8px 0;
+  margin-top: 4px;
+  background-color: #2d3748;
+  border-radius: 6px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  min-width: 180px;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Show submenu on hover in collapsed mode */
+.sidebar.collapsed .sidebar-item:hover .submenu {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Show submenu in expanded mode if opened (controlled by JS) */
+.sidebar.open .submenu.open {
+  position: static;
+  opacity: 1;
+  visibility: visible;
+  box-shadow: none;
+}
+
+/* Submenu item style */
+.submenu-item {
+  padding: 5px 5px;
+  color: #cbd5e0;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.submenu-item:hover {
+  background-color: #4a5568;
+  color: #fff;
+}
+.submenu-item a {
+  display: block;
+  padding: 5px 5px;
+  color: #cbd5e0;             /* neutral light text */
+  text-decoration: none;      /* remove underline */
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.submenu-item a:hover {
+  background-color: #4a5568;  /* dark gray on hover */
+  color: #ffffff;             /* white text on hover */
+}
+
+.submenu-item a.active {
+  background-color: #2b6cb0;  /* active state */
+  color: white;
+}
