@@ -1,20 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { FaEdit, FaTimes, FaSort, FaStepBackward, FaStepForward } from "react-icons/fa";
+import {
+  FaEdit,
+  FaTimes,
+  FaSort,
+  FaStepBackward,
+  FaStepForward,
+} from "react-icons/fa";
 
 const rowsPerPage = 5;
 
-const CanceledEvents = () => {
+const CanceledEvents = ({ userdata, role }) => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-
+  const { userId } = userdata;
   useEffect(() => {
     fetch("http://localhost:8088/api/events")
       .then((res) => res.json())
       .then((events) => {
-        setData( events.filter((element) => element.eventStatus === "canceled"));
-        setFilteredData( events.filter((element) => element.eventStatus === "canceled"));
+        if (role === "admin") {
+          setData(
+            events.filter((element) => element.eventStatus == "canceled")
+          );
+          setFilteredData(
+            events.filter((element) => element.eventStatus == "canceled")
+          );
+        } else {
+          setData(
+            events.filter(
+              (element) =>
+                element.eventStatus === "canceled" && element.userId == userId
+            )
+          );
+          setFilteredData(
+            events.filter(
+              (element) =>
+                element.eventStatus === "canceled" && element.userId == userId
+            )
+          );
+        }
       });
   }, []);
 
@@ -61,35 +86,48 @@ const CanceledEvents = () => {
                 <th key={col.key} style={styles.th}>
                   <div style={styles.headerCell}>
                     {col.label}
-                    <FaSort style={styles.sortIcon} onClick={() => handleSort(col.key)} />
+                    <FaSort
+                      style={styles.sortIcon}
+                      onClick={() => handleSort(col.key)}
+                    />
                   </div>
                 </th>
               ))}
-              <th style={styles.th}>Actions</th>
+              {/* <th style={styles.th}>Actions</th> */}
             </tr>
           </thead>
           <tbody>
             {paginatedData.length > 0 ? (
-             paginatedData.map((event) => (
+              paginatedData.map((event) => (
                 <tr key={event.id} style={styles.tr}>
                   {columns.map((col) => (
                     <td key={col.key} style={styles.td}>
-                      {col.key === "price" ? `₹${event[col.key]}` : event[col.key]}
+                      {col.key === "price"
+                        ? `₹${event[col.key]}`
+                        : event[col.key]}
                     </td>
                   ))}
-                  <td style={styles.td}>
-                    <button style={{ ...styles.smallBtn, backgroundColor: "#007bff" }} onClick={() => handleEdit(event.id)}>
+                  {/* <td style={styles.td}> */}
+                    {/* <button
+                      style={{ ...styles.smallBtn, backgroundColor: "#007bff" }}
+                      onClick={() => handleEdit(event.id)}
+                    >
                       <FaEdit />
                     </button>
-                    <button style={{ ...styles.smallBtn, backgroundColor: "#dc3545" }} onClick={() => handleCancel(event.id)}>
+                    <button
+                      style={{ ...styles.smallBtn, backgroundColor: "#dc3545" }}
+                      onClick={() => handleCancel(event.id)}
+                    >
                       <FaTimes />
-                    </button>
-                  </td>
+                    </button> */}
+                  {/* </td> */}
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={columns.length + 1} style={styles.td}>No data available</td>
+                <td colSpan={columns.length + 1} style={styles.td}>
+                  No data available
+                </td>
               </tr>
             )}
           </tbody>

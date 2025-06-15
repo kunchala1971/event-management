@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Home from "./pages/Home";
 import Layout from "./pages/Layout";
 import { Routes, Route } from "react-router-dom";
@@ -16,10 +16,37 @@ import EventBooking from "./Components/EventBooking";
 import CompletedEvents from "./Components/CompletedEvents";
 import PendingEvents from "./Components/PendingEvents";
 import CanceledEvents from "./Components/CanceledEvents";
+import EventEditing from "./Components/EventEditing";
 const App = () => {
-  const [auth, setAuth] = useState(true);
-  const [role, setRole] = useState("");
-  const [userdata, setUserData] = useState({});
+  // const [auth, setAuth] = useState(true);
+  // const [role, setRole] = useState("");
+  // const [userdata, setUserData] = useState({});
+  const [auth, setAuth] = useState(() => {
+    const storedAuth = localStorage.getItem("auth");
+    return storedAuth ? JSON.parse(storedAuth) : false;
+  });
+
+  const [role, setRole] = useState(() => {
+    return localStorage.getItem("role") || "";
+  });
+
+  const [userdata, setUserData] = useState(() => {
+    const storedUser = localStorage.getItem("userdata");
+    return storedUser ? JSON.parse(storedUser) : {};
+  });
+
+  // Update localStorage when states change
+  useEffect(() => {
+    localStorage.setItem("auth", JSON.stringify(auth));
+  }, [auth]);
+
+  useEffect(() => {
+    localStorage.setItem("role", role);
+  }, [role]);
+
+  useEffect(() => {
+    localStorage.setItem("userdata", JSON.stringify(userdata));
+  }, [userdata]);
   return (
     <>
       <Routes>
@@ -52,23 +79,27 @@ const App = () => {
             <Route index element={<AdminWidgets />} />
             <Route
               path="events-list"
-              element={<EventsList userdata={userdata} />}
+              element={<EventsList userdata={userdata} role={role} />}
             />
             <Route
               path="event-booking"
               element={<EventBooking userdata={userdata} />}
             />
+             <Route
+              path="event-editing"
+              element={<EventEditing userdata={userdata} />}
+            />
             <Route
               path="completed-events"
-              element={<CompletedEvents userdata={userdata} />}
+              element={<CompletedEvents userdata={userdata} role={role}/>}
             />
             <Route
               path="pending-events"
-              element={<PendingEvents userdata={userdata} />}
+              element={<PendingEvents userdata={userdata} role={role}/>}
             />
             <Route
               path="canceled-events"
-              element={<CanceledEvents userdata={userdata} />}
+              element={<CanceledEvents userdata={userdata} role={role}/>}
             />
           </Route>
         )}
@@ -82,23 +113,27 @@ const App = () => {
             <Route index element={<UserWidgets />} />
             <Route
               path="events-list"
-              element={<EventsList userdata={userdata} />}
+              element={<EventsList userdata={userdata} role={role} />}
             />
             <Route
               path="event-booking"
               element={<EventBooking userdata={userdata} />}
             />
+             <Route
+             path="event-editing"
+              element={<EventEditing userdata={userdata} />}
+            />
             <Route
               path="completed-events"
-              element={<CompletedEvents userdata={userdata} />}
+              element={<CompletedEvents userdata={userdata} role={role} />}
             />
             <Route
               path="pending-events"
-              element={<PendingEvents userdata={userdata} />}
+              element={<PendingEvents userdata={userdata} role={role} />}
             />
             <Route
               path="canceled-events"
-              element={<CanceledEvents userdata={userdata} />}
+              element={<CanceledEvents userdata={userdata} role={role} />}
             />
           </Route>
         )}

@@ -9,22 +9,37 @@ import {
 
 const rowsPerPage = 5;
 
-const CompletedEvents = ({ userdata }) => {
+const CompletedEvents = ({ userdata, role }) => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-
+  const { id } = userdata;
   useEffect(() => {
     fetch("http://localhost:8088/api/events")
       .then((res) => res.json())
       .then((events) => {
-        setData(
-          events.filter((element) => element.eventStatus === "completed")
-        );
-        setFilteredData(
-          events.filter((element) => element.eventStatus === "completed")
-        );
+        if (role === "admin") {
+          setData(
+            events.filter((element) => element.eventStatus == "completed")
+          );
+          setFilteredData(
+            events.filter((element) => element.eventStatus == "completed")
+          );
+        } else {
+          setData(
+            events.filter(
+              (element) =>
+                element.eventStatus === "completed" && element.userId == id
+            )
+          );
+          setFilteredData(
+            events.filter(
+              (element) =>
+                element.eventStatus === "completed" && element.userId == id
+            )
+          );
+        }
       });
   }, []);
 
@@ -81,7 +96,7 @@ const CompletedEvents = ({ userdata }) => {
                   </div>
                 </th>
               ))}
-              <th style={styles.th}>Actions</th>
+              {/* <th style={styles.th}>Actions</th> */}
             </tr>
           </thead>
           <tbody>
@@ -95,8 +110,8 @@ const CompletedEvents = ({ userdata }) => {
                         : event[col.key]}
                     </td>
                   ))}
-                  <td style={styles.td}>
-                    <button
+                  {/* <td style={styles.td}> */}
+                    {/* <button
                       style={{
                         ...styles.smallBtn,
                         backgroundColor: "#007bff",
@@ -113,8 +128,8 @@ const CompletedEvents = ({ userdata }) => {
                       onClick={() => handleCancel(event.id)}
                     >
                       <FaTimes />
-                    </button>
-                  </td>
+                    </button> */}
+                  {/* </td> */}
                 </tr>
               ))
             ) : (

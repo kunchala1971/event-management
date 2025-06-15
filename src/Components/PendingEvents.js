@@ -6,24 +6,42 @@ import {
   FaStepBackward,
   FaStepForward,
 } from "react-icons/fa";
-
+import { useNavigate } from "react-router-dom";
 const rowsPerPage = 5;
 
-const PendingEvents = () => {
+const PendingEvents = ({ userdata, role }) => {
+  const navigateTo = useNavigate();
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-
+  const { id } = userdata;
   useEffect(() => {
     fetch("http://localhost:8088/api/events")
       .then((res) => res.json())
       .then((events) => {
-        setData( events.filter((element) => element.eventStatus === "pending"));
-        setFilteredData( events.filter((element) => element.eventStatus === "pending"));
+        if (role === "admin") {
+          setData(events.filter((element) => element.eventStatus == "pending"));
+          setFilteredData(
+            events.filter((element) => element.eventStatus == "pending")
+          );
+        } else {
+          setData(
+            events.filter(
+              (element) =>
+                element.eventStatus == "pending" && element.userId == id
+            )
+          );
+          setFilteredData(
+            events.filter(
+              (element) =>
+                element.eventStatus == "pending" && element.userId == id
+            )
+          );
+        }
       });
   }, []);
-
+  console.log(data, userdata);
   const handleSort = (key) => {
     let direction = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -38,7 +56,10 @@ const PendingEvents = () => {
     setFilteredData(sorted);
   };
 
-  const handleEdit = (id) => alert(`Edit Event ID: ${id}`);
+  const handleEdit = (id) => {
+    alert(`Edit Event ID: ${id}`);
+    navigateTo("/dashboard/event-editing");
+  };
   const handleCancel = (id) => alert(`Cancel Event ID: ${id}`);
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
@@ -74,7 +95,7 @@ const PendingEvents = () => {
                   </div>
                 </th>
               ))}
-              <th style={styles.th}>Actions</th>
+              {role == "admin" && <th style={styles.th}>Actions</th>}
             </tr>
           </thead>
           <tbody>
@@ -88,26 +109,29 @@ const PendingEvents = () => {
                         : event[col.key]}
                     </td>
                   ))}
-                  <td style={styles.td}>
-                    <button
-                      style={{
-                        ...styles.smallBtn,
-                        backgroundColor: "#007bff",
-                      }}
-                      onClick={() => handleEdit(event.id)}
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      style={{
-                        ...styles.smallBtn,
-                        backgroundColor: "#dc3545",
-                      }}
-                      onClick={() => handleCancel(event.id)}
-                    >
-                      <FaTimes />
-                    </button>
-                  </td>
+
+                  {role == "admin" && (
+                    <td style={styles.td}>
+                      <button
+                        style={{
+                          ...styles.smallBtn,
+                          backgroundColor: "#007bff",
+                        }}
+                        onClick={() => handleEdit(event.id)}
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        style={{
+                          ...styles.smallBtn,
+                          backgroundColor: "#dc3545",
+                        }}
+                        onClick={() => handleCancel(event.id)}
+                      >
+                        <FaTimes />
+                      </button>
+                    </td>
+                  )}
                 </tr>
               ))
             ) : (
